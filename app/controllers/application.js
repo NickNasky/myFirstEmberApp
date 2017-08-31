@@ -157,6 +157,8 @@ export default Ember.Controller.extend({
 
 function countUnread() {
   return this.get('model').filter(function(e) {
-    return e.read === false;
+    if (e.delete === false) {
+      return e.read === false;
+    }
   }).length
 }

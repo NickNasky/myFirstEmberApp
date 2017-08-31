@@ -14,20 +14,22 @@
   addLabel=(action "addLabel")
   removeLabel=(action "removeLabel")
   toggleChecked=(action "toggleChecked")}}
+
 {{create-message
-createMessage=createMessage}}
+  createMessage=createMessage}}
+
 {{#each model as |messages|}}
-{{inbox-messages
-messages=messages
-model=model
-someSelected=someSelected
-allSelected=allSelected
-noneSelected=noneSelected
-allDeleted=allDeleted
-createMessage=createMessage
-unreadMessages=unreadMessages
-selection=(action "selectMessage")
-makeStarred=(action "toggleStarred")}}
+  {{inbox-messages
+  messages=messages
+  model=model
+  someSelected=someSelected
+  allSelected=allSelected
+  noneSelected=noneSelected
+  allDeleted=allDeleted
+  createMessage=createMessage
+  unreadMessages=unreadMessages
+  selection=(action "selectMessage")
+  makeStarred=(action "toggleStarred")}}
 {{/each}}
-<br>
+  <br>
 {{outlet}}
