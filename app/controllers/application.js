@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
   allSelected: false,
   createMessage: false,
   someSelected: false,
-  noneSelected: false,
+  noneSelected: true,
   allDeleted: false,
   unreadMessages: Ember.computed(countUnread),
 
