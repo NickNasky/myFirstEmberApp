@@ -12,11 +12,11 @@ export default Ember.Controller.extend({
     toggleMessage(){
       this.toggleProperty('createMessage')
     },
-    toggleStarred(id){
-      if (this.get('model')[id-1].starred === true) {
-      Ember.set(this.get('model')[id-1], 'starred', false)
+    toggleStarred(messages){
+      if (messages.starred === true) {
+        Ember.set(messages, 'starred', false)
       } else {
-      Ember.set(this.get('model')[id-1], 'starred', true)
+        Ember.set(messages, 'starred', true)
       }
     },
     toggleChecked(){
@@ -61,6 +61,7 @@ export default Ember.Controller.extend({
     deleteSelected() {
       for (let i = 0; i < this.get('model').length; i++){
         if (this.get('model')[i].selected === true) {
+          Ember.set(this.get('model')[i], 'selected', false)
           Ember.set(this.get('model')[i], 'delete', true)
         }
       }
@@ -79,12 +80,29 @@ export default Ember.Controller.extend({
         this.set('allDeleted', true)
         this.set('noneSelected', true)
       }
-    },
-    selectMessage(id) {
-      if (this.get('model')[id-1].selected === true) {
-        Ember.set(this.get('model')[id-1], 'selected', false)
+      let selectedMessages = this.get('model').filter(function(e) {
+        return e.selected === true;
+      }).length
+      if (selectedMessages === 0) {
+        this.set('allSelected', false);
+        this.set('someSelected', false);
+        this.set('noneSelected', true);
+      } else if(selectedMessages < this.get('model').length) {
+        this.set('allSelected', false);
+        this.set('someSelected', true);
+        this.set('noneSelected', false);
       } else {
-        Ember.set(this.get('model')[id-1], 'selected', true)
+        this.set('allSelected', true);
+        this.set('someSelected', false);
+        this.set('noneSelected', false);
+      }
+    },
+
+    selectMessage(message) {
+      if (message.selected) {
+        Ember.set(message, 'selected', false)
+      } else {
+        Ember.set(message, 'selected', true)
       }
       let selectedMessages = this.get('model').filter(function(e) {
         return e.selected === true;
@@ -103,7 +121,7 @@ export default Ember.Controller.extend({
         this.set('noneSelected', false);
       }
     },
-    addLabel(event){
+    addLabel(){
       let label = event.srcElement.value;
       for (let i = 0; i < this.get('model').length; i++){
         if (this.get('model')[i].labels.includes(label) === false) {
@@ -118,7 +136,7 @@ export default Ember.Controller.extend({
         }
       }
     },
-    removeLabel(event){
+    removeLabel(){
       let label = event.srcElement.value;
       for (let i = 0; i < this.get('model').length; i++){
         if (this.get('model')[i].labels.includes(label) === true) {

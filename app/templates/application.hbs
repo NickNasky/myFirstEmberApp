@@ -1,93 +1,33 @@
-<div class="row toolbar">
-  <div class="col-md-12">
-    <p class="pull-right">
-      <span class="badge badge"> {{unreadMessages}} </span>
-      unread messages
-    </p>
-
-    <a class="btn btn-danger" {{action "toggleMessage"}}>
-      <i class="fa fa-plus"></i>
-    </a>
-
-    <button class="btn btn-default" disabled={{if allDeleted "disabled" ""}} {{action "toggleChecked"}}>
-      {{#if allSelected}}
-        <i class="fa fa-check-square-o"></i>
-      {{else if someSelected}}
-        <i class="fa fa-minus-square-o"></i>
-      {{else}}
-        <i class="fa fa-square-o"></i>
-      {{/if}}
-    </button>
-
-    <button class="btn btn-default" disabled={{if noneSelected "disabled" ""}} {{action "markAsRead"}}>Mark As Read</button>
-
-    <button class="btn btn-default" disabled={{if noneSelected "disabled" ""}} {{action "markAsUnread"}}>Mark As Unread</button>
-
-    <select onchange={{action "addLabel"}} class="form-control label-select" disabled={{if noneSelected "disabled" ""}}>
-      <option>Apply label</option>
-      <option value="dev">dev</option>
-      <option value="personal">personal</option>
-      <option value="gschool">gschool</option>
-    </select>
-
-    <select onchange={{action "removeLabel"}} class="form-control label-select" disabled={{if noneSelected "disabled" ""}}>
-      <option>Remove label</option>
-      <option value="dev">dev</option>
-      <option value="personal">personal</option>
-      <option value="gschool">gschool</option>
-    </select>
-
-    <button class="btn btn-default" disabled={{if noneSelected "disabled" ""}} {{action "deleteSelected"}}>
-      <i class="fa fa-trash-o"></i>
-    </button>
-  </div>
-</div>
-<br>
+{{tool-bar
+  messages=messages
+  model=model
+  someSelected=someSelected
+  allSelected=allSelected
+  noneSelected=noneSelected
+  allDeleted=allDeleted
+  createMessage=createMessage
+  unreadMessages=unreadMessages
+  toggleMessage=(action "toggleMessage")
+  markAsRead=(action "markAsRead")
+  markAsUnread=(action "markAsUnread")
+  deleteSelected=(action "deleteSelected")
+  addLabel=(action "addLabel")
+  removeLabel=(action "removeLabel")
+  toggleChecked=(action "toggleChecked")}}
+{{create-message
+createMessage=createMessage}}
 {{#each model as |messages|}}
-<div class="row message {{if messages.read "" "un"}}read {{if messages.selected "highlight" ""}} {{if messages.delete "hide" ""}}">
-  <div class="col-xs-1">
-    <div class="row">
-      <div class="col-xs-2">
-        <input type="checkbox" onchange={{action "selectMessage" messages.id}}  checked={{if messages.selected "checked" ""}} />
-      </div>
-      <div class="col-xs-2">
-        <i class="star fa fa-star{{if messages.starred "" "-o" }}" {{action "toggleStarred" messages.id}}></i>
-      </div>
-    </div>
-  </div>
-  <div class="col-xs-11">
-    {{#each messages.labels key = "@index" as |label|}}
-      <span class="label label-warning">{{label}}</span>
-    {{/each}}
-    <a href="#">
-      {{messages.subject}}
-    </a>
-  </div>
-</div>
+{{inbox-messages
+messages=messages
+model=model
+someSelected=someSelected
+allSelected=allSelected
+noneSelected=noneSelected
+allDeleted=allDeleted
+createMessage=createMessage
+unreadMessages=unreadMessages
+selection=(action "selectMessage")
+makeStarred=(action "toggleStarred")}}
 {{/each}}
 <br>
-<form class="form-horizontal well {{if createMessage "" "hide"}}">
-  <div class="form-group">
-    <div class="col-sm-8 col-sm-offset-2">
-      <h4>Compose Message</h4>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="subject" class="col-sm-2 control-label">Subject</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control" id="subject" placeholder="Enter a subject" name="subject">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="body" class="col-sm-2 control-label">Body</label>
-    <div class="col-sm-8">
-      <textarea name="body" id="body" class="form-control"></textarea>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-8 col-sm-offset-2">
-      <input type="submit" value="Send" class="btn btn-primary">
-    </div>
-  </div>
-</form>
 {{outlet}}

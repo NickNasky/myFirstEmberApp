@@ -1,0 +1,45 @@
+<div class="row toolbar">
+  <div class="col-md-12">
+    <p class="pull-right">
+      <span class="badge badge"> {{unreadMessages}} </span>
+      unread messages
+    </p>
+
+    <a class="btn btn-danger" {{action "toggleMessage"}}>
+      <i class="fa fa-plus"></i>
+    </a>
+
+    <button class="btn btn-default" disabled={{if allDeleted "disabled" ""}} {{action "toggleChecked"}}>
+      {{#if allSelected}}
+        <i class="fa fa-check-square-o"></i>
+      {{else if someSelected}}
+        <i class="fa fa-minus-square-o"></i>
+      {{else}}
+        <i class="fa fa-square-o"></i>
+      {{/if}}
+    </button>
+
+    <button class="btn btn-default" disabled={{if noneSelected "disabled" ""}} {{action "markAsRead"}}>Mark As Read</button>
+
+    <button class="btn btn-default" disabled={{if noneSelected "disabled" ""}} {{action "markAsUnread"}}>Mark As Unread</button>
+
+    <select onchange={{action "addLabel"}} class="form-control label-select" disabled={{if noneSelected "disabled" ""}}>
+      <option hidden>Apply label</option>
+      <option value="dev">dev</option>
+      <option value="personal">personal</option>
+      <option value="gschool">gschool</option>
+    </select>
+
+    <select onchange={{action "removeLabel"}} class="form-control label-select" disabled={{if noneSelected "disabled" ""}}>
+      <option hidden>Remove label</option>
+      <option value="dev">dev</option>
+      <option value="personal">personal</option>
+      <option value="gschool">gschool</option>
+    </select>
+
+    <button class="btn btn-default" disabled={{if noneSelected "disabled" ""}} {{action "deleteSelected"}}>
+      <i class="fa fa-trash-o"></i>
+    </button>
+  </div>
+</div>
+<br>

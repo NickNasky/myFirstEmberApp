@@ -1,0 +1,20 @@
+<div class="row message {{if messages.read "" "un"}}read {{if messages.selected "highlight" ""}} {{if messages.delete "hide" ""}}">
+  <div class="col-xs-1">
+    <div class="row">
+      <div class="col-xs-2">
+        <input type="checkbox" onchange={{action "selection"}}  checked={{if messages.selected "checked" ""}} />
+      </div>
+      <div class="col-xs-2">
+        <i class="star fa fa-star{{if messages.starred "" "-o" }}" {{action "makeStarred"}}></i>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-11">
+    {{#each messages.labels key = "@index" as |label|}}
+      <span class="label label-warning">{{label}}</span>
+    {{/each}}
+    <a href="#">
+      {{messages.subject}}
+    </a>
+  </div>
+</div>
