@@ -73,6 +73,6 @@ footer.spacer {
   cursor: pointer;
 }
 
-.highlight{
+.highlight, .read.highlight{
   background-color: lightyellow;
 }
