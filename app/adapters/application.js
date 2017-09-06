@@ -1,7 +1,7 @@
-import FirebaseAdapter from 'emberfire/adapters/firebase';
+import DS from 'ember-data';
 
-const { inject } = Ember;
-
-export default FirebaseAdapter.extend({
-  firebase: inject.service()
-})
+export default DS.RESTAdapter.extend({
+  host: "http://localhost:8082",
+  namespace: "api",
+  defaultSerializer: 'application'
+});

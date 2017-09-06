@@ -11,6 +11,7 @@ export default Ember.Controller.extend({
   actions: {
     toggleMessage(){
       this.toggleProperty('createMessage')
+      console.log(this.get('model'));
     },
     toggleStarred(messages){
       if (messages.starred === true) {
@@ -156,9 +157,10 @@ export default Ember.Controller.extend({
 });
 
 function countUnread() {
-  return this.get('model').filter(function(e) {
-    if (e.delete === false) {
-      return e.read === false;
-    }
-  }).length
+  // return this.get('model').filter(function(e) {
+  //   if (e.delete === false) {
+  //     return e.read === false;
+  //   }
+  // }).length
+  return 4
 }
